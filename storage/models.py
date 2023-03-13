@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import User
 from recipe.models import Recipe
+
 # Create your models here.
 
 class Storage(models.Model):
@@ -16,3 +17,7 @@ class Storage(models.Model):
 
     def __str__(self):
         return self.recipe.title
+
+    def get_serializer(self):
+        from .serializer import StorageSerializer
+        return StorageSerializer(self)

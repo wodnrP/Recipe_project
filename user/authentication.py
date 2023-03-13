@@ -10,17 +10,17 @@ def create_access_token(id):
         'id': id,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
         'iat': datetime.datetime.utcnow()
-    },  'access_secret', algorithm='HS256')
+    },  'access_secret', algorithm ='HS256')
 
 # access_token에서 유효기간 복호화
 def access_token_exp(token):
-    payload = jwt.decode(token, 'access_secret', algorithm ='HS256')
+    payload = jwt.decode(token, 'access_secret', algorithms ='HS256')
     return payload['exp']
     
 # access_token에서 id 복호화
 def decode_access_token(token):
     try:
-        payload = jwt.decode(token, 'access_secret', algorithm ='HS256')
+        payload = jwt.decode(token, 'access_secret', algorithms ='HS256')
         return payload['id']
     except:
         raise exceptions.AuthenticationFailed('unauthenticated')
@@ -36,7 +36,7 @@ def create_refresh_token(id):
 # refresh_token에서 id 복호화
 def decode_refresh_token(token):
     try:
-        payload = jwt.decode(token, 'refresh_secret', algorithm='HS256')
+        payload = jwt.decode(token, 'refresh_secret', algorithms='HS256')
         return payload['id']
     except:
         raise exceptions.AuthenticationFailed('unauthenticated')

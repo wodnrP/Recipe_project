@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -24,53 +24,43 @@ class MyRecipe(APIView):
         pass
     
     def post(self, request, recipe_id):
-        
-        recipe = Recipe.objects.get(pk=recipe_id)
         auth = get_authorization_header(request).split()
         if auth and len(auth) == 2:
             user_token = token_decode(auth)
-            try:
-                storage = Storage.objects.get(recipe_id=recipe.id, user_id=user_token)
-                
-                if storage.recipe.title == recipe.title:
-                    storage.save()
-            except Storage.DoesNotExist:
-                user = User.objects.get(pk=user_token)
-                storage = Storage(
-                    # id=Storage.id,
-                    user=user,
-                    recipe=recipe,
-                    # created_at=Storage.created_at,
-                )
-                
-                storage.save()
+            user = User.objects.get(id=user_token)
+
+            # -----request에서 recipe_id를 받아오는 경우 / 현재는 url-----
+            # recipe_id = request.data.get('recipe_id')
+    
+            recipe = get_object_or_404(Recipe, id=recipe_id)
             
-            serializer = StorageSerializer(data=storage, partial=True)
-            print(serializer, "+", type(serializer))
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# Create your views here.
-# @login_required
-# def add_cart(request, recipe_id):
-# 	# 상품을 담기 위해 해당 상품 객체를 product 변수에 할당
-#     recipe = Recipe.objects.get(pk=recipe_id)
-
-#     try:
-#     	# 장바구니는 user 를 FK 로 참조하기 때문에 save() 를 하기 위해 user 가 누구인지도 알아야 함
-#         cart = CartItem.objects.get(recipe__id=recipe.pk, user__id=request.user.pk)
-#         if cart:
-#             if cart.recipe.name == recipe.name:
-#                 cart.quantity += 1
-#                 cart.save()
-#     except CartItem.DoesNotExist:
-#         user = User.objects.get(pk=request.user.pk)
-#         cart = CartItem(
-#             user=user,
-#             recipe=recipe,
-#             quantity=1,
-#         )
-#         cart.save()
-#     return redirect('recipe:my-cart')
+            # 이미 저장한 레시피인지 확인 
+            storage_check = Storage.objects.filter(user=user, recipe=recipe, active=True).exists()
+            if storage_check is False:
+                try:
+                    storage = Storage(user=user, recipe=recipe, active=True)
+                    if storage.recipe.title == recipe.title:
+                        storage.save()
+                except Storage.DoesNotExist:
+                    storage = Storage(
+                        user=user,
+                        recipe=recipe,
+                        active=True
+                    )
+                    storage.save()
+                serializer = Storage.get_serializer(storage)
+                return Response(serializer.data)
+            
+            # 이미 저장한 경우 message 반환
+            elif storage_check is True:
+                return Response({'message': "이미 저장한 레시피 입니다."})
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
