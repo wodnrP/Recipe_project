@@ -20,9 +20,38 @@ from operator import itemgetter
 
 # user, recipe, active, created_at
 class MyRecipe(APIView):
+    # 카테고리 별로 정렬 기능, 
     def get(self, request):
-        pass
-    
+        # http://~/storage/?sort="category"
+        sort = request.GET.get('sort', None)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        if sort is None:
+            sort = "전체"
+
+        auth = get_authorization_header(request).split()
+        if auth and len(auth) == 2:
+            user_token = token_decode(auth)
+            # 유저 객체 생성
+            user = User.objects.get(id=user_token)
+
+            # 해당 유저가 storage에 저장한 레시피 fk를 리스트 형식으로 필터
+            storage = Storage.objects.filter(user=user).values_list('recipe', flat=True)
+            
+            # recipe fk로 Recipe모델의 데이터를 category기준, 해당 sort 쿼리로 필터 
+            categoryFilter = Recipe.objects.filter(id__in=storage, category__icontains=sort)
+
+            # 필터된 데이터 셋을 최신순으로 정렬 및 반환
+            resultRecipe = categoryFilter.order_by('-create_time')
+            result = paginator.paginate_queryset(resultRecipe, request)
+            serializer = RecipeSerializer(result, many=True, context={"request" : request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
+
+
+
     def post(self, request, recipe_id):
         auth = get_authorization_header(request).split()
         if auth and len(auth) == 2:

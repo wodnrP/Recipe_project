@@ -18,6 +18,8 @@ class Storage(models.Model):
     def __str__(self):
         return self.recipe.title
 
+    # storage 저장 API를 위해, Storage serializer 참조 함수 추가 
+    # (중복 import 방지 포함)
     def get_serializer(self):
         from .serializer import StorageSerializer
         return StorageSerializer(self)
