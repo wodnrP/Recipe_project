@@ -48,6 +48,8 @@ class MyRecipe(APIView):
             result = paginator.paginate_queryset(resultRecipe, request)
             serializer = RecipeSerializer(result, many=True, context={"request" : request})
             return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message' : "로그인이 필요한 서비스 입니다"})
             
 
 
