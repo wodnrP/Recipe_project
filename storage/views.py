@@ -18,9 +18,24 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from operator import itemgetter
 
-# user, recipe, active, created_at
+# 유저 로그인 확인, 해당 유저와 레시피 데이터셋 리스트로 반환 (post, delete)
+def user_recipe(request, recipe_id):
+    auth = get_authorization_header(request).split()
+    if auth and len(auth) == 2:
+        user_token = token_decode(auth)
+        user = User.objects.get(id=user_token)
+
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        
+        return [user, recipe]
+
+# 이미 저장한 레시피인지 확인
+def storage_check(user_recipe):
+    storage_check = Storage.objects.filter(user=user_recipe[0], recipe=user_recipe[1], active=True).exists()
+    return storage_check
+    
+
 class MyRecipe(APIView):
-    # 카테고리 별로 정렬 기능, 
     def get(self, request):
         # http://~/storage/?sort="category"
         sort = request.GET.get('sort', None)
@@ -52,42 +67,38 @@ class MyRecipe(APIView):
             return Response({'message' : "로그인이 필요한 서비스 입니다"})
             
 
-
-
     def post(self, request, recipe_id):
-        auth = get_authorization_header(request).split()
-        if auth and len(auth) == 2:
-            user_token = token_decode(auth)
-            user = User.objects.get(id=user_token)
+        userRecipe = user_recipe(request, recipe_id)
+        storageCheck = storage_check(userRecipe)
 
-            # -----request에서 recipe_id를 받아오는 경우 / 현재는 url-----
-            # recipe_id = request.data.get('recipe_id')
-    
-            recipe = get_object_or_404(Recipe, id=recipe_id)
-            
-            # 이미 저장한 레시피인지 확인 
-            storage_check = Storage.objects.filter(user=user, recipe=recipe, active=True).exists()
-            if storage_check is False:
-                try:
-                    storage = Storage(user=user, recipe=recipe, active=True)
-                    if storage.recipe.title == recipe.title:
-                        storage.save()
-                except Storage.DoesNotExist:
-                    storage = Storage(
-                        user=user,
-                        recipe=recipe,
-                        active=True
-                    )
+        if storageCheck is False:
+            try:
+                storage = Storage(user=userRecipe[0], recipe=userRecipe[1], active=True)
+                if storage.recipe.title == userRecipe[1].title:
                     storage.save()
-                serializer = Storage.get_serializer(storage)
-                return Response(serializer.data)
-            
-            # 이미 저장한 경우 message 반환
-            elif storage_check is True:
-                return Response({'message': "이미 저장한 레시피 입니다."})
-        
-        
-        
+            except Storage.DoesNotExist:
+                storage = Storage(
+                    user=userRecipe[0],
+                    recipe=userRecipe[1],
+                    active=True
+                )
+                storage.save()
+            serializer = Storage.get_serializer(storage)
+            return Response(serializer.data)
+        # 이미 저장한 경우 message 반환
+        elif storageCheck is True:
+            return Response({'message': "이미 저장한 레시피 입니다."})
+
+    
+    def delete(self, request, recipe_id):
+            userRecipe = user_recipe(request, recipe_id)
+            storageCheck = storage_check(userRecipe)
+
+            # 이미 저장한 레시피일 경우 삭제
+            if storageCheck is True:
+                storage = Storage.objects.get(user=userRecipe[0], recipe=userRecipe[1])
+                storage.delete()
+                return Response({'message' : 'sucess', 'code' : 200})
         
         
         
