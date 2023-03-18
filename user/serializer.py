@@ -19,11 +19,14 @@ class UserSerializer(serializers.ModelSerializer):
     # 유저 정보 변경 - UserAPIView patch와 연관
     def update(self, user, validated_data):
         # 수정된 정보일 경우만 저장
-        if user.password != self.validated_data['password']:
-            user.set_password(validated_data['password'])
-        elif user.profile != self.validated_data['profile']:
-            user.profile = validated_data.get('profile', user.profile)
-        elif user.nickname != self.validated_data['nickname']:
-            user.nickname = validated_data.get('nickname', user.nickname)
+        if 'password' in self.validated_data: 
+            if user.password != self.validated_data['password']:
+                user.set_password(validated_data['password'])
+        elif 'profile' in self.validated_data: 
+            if user.profile != self.validated_data['profile']:
+                user.profile = validated_data.get('profile', user.profile)
+        elif 'nickname' in self.validated_data:
+            if user.nickname != self.validated_data['nickname']:
+                user.nickname = validated_data.get('nickname', user.nickname)
         user.save()
         return user
