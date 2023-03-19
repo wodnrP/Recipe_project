@@ -33,7 +33,7 @@ def user_recipe(request, recipe_id):
 def storage_check(user_recipe):
     storage_check = Storage.objects.filter(user=user_recipe[0], recipe=user_recipe[1], active=True).exists()
     return storage_check
-    
+
 
 class MyRecipe(APIView):
     def get(self, request):
@@ -70,6 +70,8 @@ class MyRecipe(APIView):
     def post(self, request, recipe_id):
         userRecipe = user_recipe(request, recipe_id)
         storageCheck = storage_check(userRecipe)
+        recipe = Recipe.objects.get(id=userRecipe[1].id)
+        print(recipe.share, type(recipe.share))
 
         if storageCheck is False:
             try:
@@ -83,6 +85,10 @@ class MyRecipe(APIView):
                     active=True
                 )
                 storage.save()
+            # share 수 증가
+            recipe.share += 1 
+            recipe.save()
+            
             serializer = Storage.get_serializer(storage)
             return Response(serializer.data)
         # 이미 저장한 경우 message 반환
@@ -93,11 +99,14 @@ class MyRecipe(APIView):
     def delete(self, request, recipe_id):
             userRecipe = user_recipe(request, recipe_id)
             storageCheck = storage_check(userRecipe)
-
+            recipe = Recipe.objects.get(id=userRecipe[1].id)
             # 이미 저장한 레시피일 경우 삭제
             if storageCheck is True:
                 storage = Storage.objects.get(user=userRecipe[0], recipe=userRecipe[1])
                 storage.delete()
+                # share 수 감소
+                recipe.share -= 1
+                recipe.save()
                 return Response({'message' : 'sucess', 'code' : 200})
         
         

@@ -26,7 +26,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         # 각각의 image를 하나의 images 객체로 생성
         image_set = instance['request'].FILES
-        print(image_set)
         for image_data in image_set.getlist('image'):
             Recipe_image.objects.create(recipe=recipe_obj, image=image_data)
         

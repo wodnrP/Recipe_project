@@ -10,9 +10,9 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     material = models.TextField()
     cook = models.TextField()
-    recommend = models.IntegerField(blank=True, null=True)
-    hits = models.IntegerField(blank=True, null=True)
-    share = models.IntegerField(blank=True, null=True) 
+    recommend = models.IntegerField(blank=True, null=True, default=0)
+    hits = models.IntegerField(blank=True, null=True, default=0)
+    share = models.IntegerField(blank=True, null=True, default=0) 
     
     CategoryType = models.TextChoices('CookType', '전체 회/샐러드 구이 튀김 찜/탕 면')
     category = models.CharField(blank=True, choices=CategoryType.choices, max_length=10, default='전체')
