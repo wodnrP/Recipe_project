@@ -35,9 +35,9 @@ environ.Env.read_env(
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user.User'
 # Application definition
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-import my_settings
+import app.my_settings as my_settings
 
 DATABASES = my_settings.DATABASES
 
