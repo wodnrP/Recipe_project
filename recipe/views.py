@@ -13,6 +13,7 @@ from user.views import token_decode
 import io
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
 from operator import itemgetter
 # Create your views here.
 
@@ -112,3 +113,21 @@ class AllRecipe(APIView):
         recipe.delete()
         return Response({'message' : 'sucess', 'code' : 200})
 
+# recommend add (임시)
+class RecommendAPIView(APIView):
+    def get(self, request, recipe_id):
+        auth = get_authorization_header(request).split()
+        if auth and len(auth) == 2:
+            recipe = Recipe.objects.get(id=recipe_id)
+            if request.data['like_add'] == 'True':
+                recipe.recommend += 1
+                recipe.save()
+                return Response({'message' : "like"})
+
+            elif recipe.recommend > 0 and request.data['like_add'] == 'False':
+                recipe.recommend -= 1
+                recipe.save()
+                return Response({'message' : "unlike"})
+            
+            else:
+                return Response({'message' : "like Error"})

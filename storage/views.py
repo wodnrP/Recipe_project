@@ -71,7 +71,6 @@ class MyRecipe(APIView):
         userRecipe = user_recipe(request, recipe_id)
         storageCheck = storage_check(userRecipe)
         recipe = Recipe.objects.get(id=userRecipe[1].id)
-        print(recipe.share, type(recipe.share))
 
         if storageCheck is False:
             try:
