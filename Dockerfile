@@ -1,33 +1,23 @@
 # base image
-FROM python:3.9.6-slim-buster
+FROM python:3.9.6
+
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./app  /app
 
 # set working directory
 WORKDIR /app
-# copy project files
-COPY ./  /app/
-# copy requirements.txt
-COPY requirements.txt /app/
-
-# RUN apt-get update \
-#     && apt-get install -y --no-install-recommends \
-#     default-libmysqlclient-dev \
-#     && rm -rf /var/lib/apt/lists/*
-
-# install dependencies
-RUN pip install --upgrade pip && \
-    pip install --use-pep517 -r /app/requirements.txt
-    # apt -y install default-libmysqlclient-dev && \ 
-    # python -m venv /py && \
-    # /py/bin/
-
-
-# COPY ./docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-# COPY ./docker/django/entrypoint.sh /entrypoint.sh
 
 # expose port
-EXPOSE 80
+EXPOSE 8000
 
+RUN python -m venv /py && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    rm -rf /tmp
+
+#RUN pip install gunicorn
 # set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PATH="/py/bin:$PATH"
+# ENV PYTHONDONTWRITEBYTECODE 1
+# ENV PYTHONUNBUFFERED 1
 
