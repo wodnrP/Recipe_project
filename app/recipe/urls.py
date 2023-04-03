@@ -1,5 +1,5 @@
 from django.urls import path
-from .import views
+from . import views
 from .views import PopularRecipe, AllRecipe, RecommendAPIView
 from django.conf import settings
 from django.conf.urls.static import static

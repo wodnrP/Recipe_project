@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'path.to.CloseOldConnectionsMiddleware'
+    #'path.to.CloseOldConnectionsMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -90,18 +90,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-import app.my_settings as my_settings
+import config.my_settings as my_settings
 
 DATABASES = my_settings.DATABASES
 
-from django.db import close_old_connections
-from django.utils.deprecation import MiddlewareMixin
+# from django.db import close_old_connections
+# from django.utils.deprecation import MiddlewareMixin
 
-class CloseOldConnectionsMiddleware(MiddlewareMixin):
-    def __call__(self, request):
-        response = self.get_response(request)
-        close_old_connections()
-        return response
+# class CloseOldConnectionsMiddleware(MiddlewareMixin):
+#     def __call__(self, request):
+#         response = self.get_response(request)
+#         close_old_connections()
+#         return response
 
 # {
 #     'default': {

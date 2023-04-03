@@ -17,7 +17,6 @@ RUN python -m venv /py && \
 
 #RUN pip install gunicorn
 # set environment variables
-ENV PATH="/py/bin:$PATH"
+ENV PATH /py/bin:$PATH
 # ENV PYTHONDONTWRITEBYTECODE 1
 # ENV PYTHONUNBUFFERED 1
-

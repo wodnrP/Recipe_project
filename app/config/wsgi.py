@@ -8,9 +8,13 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
+# Add "/app" to the PYTHONPATH
+sys.path.append('/app')
 
 application = get_wsgi_application()
