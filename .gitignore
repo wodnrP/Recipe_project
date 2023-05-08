@@ -14,4 +14,4 @@ media
 .env
 my_settings.py
 myvenv
-db
+db/
