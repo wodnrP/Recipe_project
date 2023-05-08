@@ -3,18 +3,21 @@ version: "3.9"
 services:
   nginx:
     image: nginx:latest
+    build: ./nginx
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - ./app:/app
       - ./nginx:/etc/nginx/conf.d
+      - static_volume:/app/staticfiles/
     depends_on:
       - web
 
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    expose:
+      - "3306"
     environment:
       MYSQL_DATABASE: ${MYSQL_DB}
       MYSQL_HOST: ${MYSQL_HOST}
@@ -27,20 +30,28 @@ services:
       # - --default-authentication-plugin=mysql_native_password 
       # - --sql-mode=NO_ENGINE_SUBSTITUTION
     volumes:
-      - .dbdata:/var/lib/mysql
+      - ./db/data:/var/lib/mysql
+      - ./db/conf.d:/etc/mysql/conf.d
     healthcheck:
       test: ["CMD-SHELL", "ping", "-h", "localhost"]
       interval: 30s
-      timeout: 10s
+      timeout: 30s
       retries: 5
 
   web:
     build: 
       context: .
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
+    restart: always
     volumes:
       - ./app:/app
+      - static_volume:/app/staticfiles/
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    links:
+      - mysql:mysql
     depends_on:
-      - db
+      - mysql
+
+volumes:
+  static_volume:

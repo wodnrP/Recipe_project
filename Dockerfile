@@ -13,10 +13,11 @@ EXPOSE 8000
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirements.txt && \
-    rm -rf /tmp
-
+    rm -rf /tmp 
 #RUN pip install gunicorn
 # set environment variables
 ENV PATH /py/bin:$PATH
+
+RUN python manage.py collectstatic --noinput
 # ENV PYTHONDONTWRITEBYTECODE 1
 # ENV PYTHONUNBUFFERED 1
