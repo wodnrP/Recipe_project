@@ -13,5 +13,5 @@ db.sqlite3-journal
 media
 .env
 my_settings.py
-myvenv
+/myvenv
 db/
