@@ -37,9 +37,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3.34.152.150']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3.34.152.150', 'rdproject.site']
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://3.34.152.150']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://3.34.152.150', 'https://rdproject.site']
 
 AUTH_USER_MODEL = 'user.User'
 # Application definition
