@@ -18,6 +18,6 @@ RUN python -m venv /py && \
 # set environment variables
 ENV PATH /py/bin:$PATH
 
-RUN python manage.py collectstatic --noinput
+# RUN python manage.py collectstatic --noinput
 # ENV PYTHONDONTWRITEBYTECODE 1
 # ENV PYTHONUNBUFFERED 1
