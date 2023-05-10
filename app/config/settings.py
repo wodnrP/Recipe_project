@@ -37,9 +37,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3.34.152.150']
 
-CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = ['localhost', 'http://127.0.0.1:8000', 'http://3.34.152.150']
 
 AUTH_USER_MODEL = 'user.User'
 # Application definition
