@@ -121,3 +121,18 @@ class UserAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+# refresh login
+class RefreshAPIView(APIView):
+    def post(self, request):
+        token = request.data['refresh_token']
+        
+        byt_token = bytes(token, 'utf-8')
+
+        id = decode_refresh_token(byt_token)
+        access_token = create_access_token(id)
+        access_exp = access_token_exp(access_token)
+        return Response({
+            'access_token': access_token,
+            'access_exp': access_exp
+        })
