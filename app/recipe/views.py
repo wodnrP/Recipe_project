@@ -115,16 +115,16 @@ class AllRecipe(APIView):
 
 # recommend add (임시)
 class RecommendAPIView(APIView):
-    def get(self, request, recipe_id):
+    def post(self, request, recipe_id):
         auth = get_authorization_header(request).split()
         if auth and len(auth) == 2:
             recipe = Recipe.objects.get(id=recipe_id)
-            if request.data['like_add'] == 'True':
+            if request.data['like_add'] == 'true':
                 recipe.recommend += 1
                 recipe.save()
                 return Response({'message' : "like"})
 
-            elif recipe.recommend > 0 and request.data['like_add'] == 'False':
+            elif recipe.recommend > 0 and request.data['like_add'] == 'false':
                 recipe.recommend -= 1
                 recipe.save()
                 return Response({'message' : "unlike"})
