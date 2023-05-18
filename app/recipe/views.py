@@ -131,3 +131,11 @@ class RecommendAPIView(APIView):
             
             else:
                 return Response({'message' : "like Error"})
+
+# 레시피 id로 레시피 1개 조회
+class detailGetAPIView(APIView):
+    def get(self, request, recipe_id):
+        recipe = Recipe.objects.get(pk = recipe_id)
+        serializer = RecipeSerializer(recipe, context={"request": request})
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
