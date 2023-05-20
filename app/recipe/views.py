@@ -136,6 +136,11 @@ class RecommendAPIView(APIView):
 class detailGetAPIView(APIView):
     def get(self, request, recipe_id):
         recipe = Recipe.objects.get(pk = recipe_id)
+
+        # 조회수 기능
+        recipe.hits += 1
+        recipe.save()
+        
         serializer = RecipeSerializer(recipe, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
