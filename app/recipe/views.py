@@ -43,6 +43,7 @@ class PopularRecipe(APIView):
                 'title' : sort_data[i]['title'],
                 'recommend' : sort_data[i]['recommend'],
                 'share' : sort_data[i]['share'],
+                'hits' : sort_data[i]['hits'],
                 'images' : sort_data[i]['images']
             }
             response_data.append(result)
@@ -140,7 +141,7 @@ class detailGetAPIView(APIView):
         # 조회수 기능
         recipe.hits += 1
         recipe.save()
-        
+
         serializer = RecipeSerializer(recipe, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
