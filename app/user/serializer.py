@@ -22,10 +22,10 @@ class UserSerializer(serializers.ModelSerializer):
         if 'password' in self.validated_data: 
             if user.password != self.validated_data['password']:
                 user.set_password(validated_data['password'])
-        elif 'profile' in self.validated_data: 
+        if 'profile' in self.validated_data: 
             if user.profile != self.validated_data['profile']:
                 user.profile = validated_data.get('profile', user.profile)
-        elif 'nickname' in self.validated_data:
+        if 'nickname' in self.validated_data:
             if user.nickname != self.validated_data['nickname']:
                 user.nickname = validated_data.get('nickname', user.nickname)
         user.save()
