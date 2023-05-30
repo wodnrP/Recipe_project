@@ -75,3 +75,11 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 > - .gitignore
 > - README.md  
 ------------
+## ERD
+<img width="589" alt="스크린샷 2023-05-30 오후 6 08 15" src="https://github.com/wodnrP/Recipe_project/assets/102155143/6386a013-7d20-4b16-9411-37551635f80a">
+
+------------
+
+## 📝 개선할 사항
+1. 이번 프로젝트에서 front-end개발은 FlutterFlow라는 tool을 활용했습니다. 특성상 ios와 android 모두 호환이 가능하여 선택했으며 ios를 기준으로 개발을 진행했으나, android에서 검색 화면이 깨지는 오류가 발생하여 해결하지 못한 점이 아쉬웠습니다. 다음 버전 개발은 flutterflow가 아닌 flutter 혹은 다른 기술 스택을 활용하여 에러를 잡을 예정입니다. 
+2. 현재 좋아요 기능은 Recipe 모델의 recommend 수가 간단히 증감 하도록 로직을 구성했지만, front를 개발하면서 back-end로직에서 좋아요의 재요청을 검증해주는 과정이 더 필요하다는 것을 알았습니다. 이는 추후 개발에서 Recipe 모델에 Many to Many field를 추가하여 좋아요의 로직을 다시 구성해 볼 계획입니다.
