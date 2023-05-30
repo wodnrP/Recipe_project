@@ -71,5 +71,6 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 > - Dockerfile : django app dockerfile
 > - docker-compose.yml
 > - requirements.txt
-> - .gitignore  
+> - .gitignore
+> - README.md  
 ------------
