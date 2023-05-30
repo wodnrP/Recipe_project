@@ -33,3 +33,43 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 
 ------------
 ## 🖥️ 화면 구성
+|메인 페이지|로그인 후, 메인 페이지|조회 페이지|
+|:---:|:---:|:---:|
+|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 45 45" src="https://github.com/wodnrP/Recipe_project/assets/102155143/a12d6dcb-9caa-4845-99a4-8b3ab5e8f838">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 52 31" src="https://github.com/wodnrP/Recipe_project/assets/102155143/6122e042-4476-42a7-b18f-59f5bebfbf0c">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 47 24" src="https://github.com/wodnrP/Recipe_project/assets/102155143/45d9ed95-98ce-46a9-bcea-08ce5f130e17">|
+|로그인 페이지|회원가입 페이지|마이 페이지|
+|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 47 31" src="https://github.com/wodnrP/Recipe_project/assets/102155143/475d3c22-2bc6-40a8-b389-bdc56d144324">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 47 48" src="https://github.com/wodnrP/Recipe_project/assets/102155143/b856263f-ec0b-4ca9-bb37-d15563cd9b07">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 50 05" src="https://github.com/wodnrP/Recipe_project/assets/102155143/622a2658-d965-43b1-ab0e-93b02b7dc2ff">|
+|레시피 작성 페이지|저장된 레시피 페이지|상세 조회 페이지|
+|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 48 33" src="https://github.com/wodnrP/Recipe_project/assets/102155143/654e3933-41a5-4f4f-8bfd-947e7dcf85b6">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 59 48" src="https://github.com/wodnrP/Recipe_project/assets/102155143/7c20ae1f-5a07-43e9-a355-64c9121ce1cf">|<img width="200" height="350" alt="스크린샷 2023-05-25 오후 9 51 16" src="https://github.com/wodnrP/Recipe_project/assets/102155143/6e9ca8aa-f854-4b5e-b0ab-b445d42c34e7">|
+------------
+## 📌 주요 기능
+### ⭐️ 레시피 저장 기능
+- 사용자가 원하는 레시피를 저장할 수 있는 기능
+- 저장된 레시피는 카테고리별 Dropdown을 통해 필터링하여 조회가능 
+### ⭐️ 상세 조회한 레시피 좋아요 기능
+- 레시피 상세 페이지에서 사용자가 원하는 레시피의 좋아요 수 증가 기능 
+- 레시피를 좋아요한 수와 저장한 수, 조회한 수를 계산하여 인기 레시피 TOP10선정
+### ⭐️ 원하는 레시피 검색기능
+- 레시피 제목을 기준으로 검색어가 포함되는 레시피를 모두 검색
+- 검색된 레시피는 최신순으로 정렬되어 제공
+------------
+## 아키텍쳐
+### 📂 디렉토리 구조
+> #### Recipe_project
+> - app
+>   - config : settings.py 민감 정보 분리
+>   - recipe : recipe 관련 api 작성
+>   - storage : 저장한 레시피 관련 api 작성
+>   - user : 유저 관련 api 작성
+>   - staticfiles
+>   - manage.py
+> - db
+>   - conf.d
+>   - data
+> - nginx
+>   - Dockerfile : nginx dockerfile
+>   - project.conf
+> - Dockerfile : django app dockerfile
+> - docker-compose.yml
+> - requirements.txt
+> - .gitignore  
+------------
