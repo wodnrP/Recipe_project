@@ -80,7 +80,7 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 
 ------------
 ## 배포 인프라
-<img width="785" alt="배포infra" src="https://github.com/wodnrP/Recipe_project/assets/102155143/4ca33261-9c5f-4c39-bc47-c4e64d865434">
+<img width="785" alt="배포인프라" src="https://github.com/wodnrP/Recipe_project/assets/102155143/ea8fa157-6474-49d9-9b6b-4e4dde71748f">
 
 ____________
 
