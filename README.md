@@ -79,6 +79,10 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 <img width="589" alt="스크린샷 2023-05-30 오후 6 08 15" src="https://github.com/wodnrP/Recipe_project/assets/102155143/6386a013-7d20-4b16-9411-37551635f80a">
 
 ------------
+## 배포 인프라
+<img width="785" alt="배포infra" src="https://github.com/wodnrP/Recipe_project/assets/102155143/4ca33261-9c5f-4c39-bc47-c4e64d865434">
+
+____________
 
 ## 📝 개선할 사항
 1. 이번 프로젝트에서 front-end개발은 FlutterFlow라는 tool을 활용했습니다. 특성상 ios와 android 모두 호환이 가능하여 선택했으며 ios를 기준으로 개발을 진행했으나, android에서 검색 화면이 깨지는 오류가 발생하여 해결하지 못한 점이 아쉬웠습니다. 다음 버전 개발은 flutterflow가 아닌 flutter 혹은 다른 기술 스택을 활용하여 에러를 잡을 예정입니다. 
