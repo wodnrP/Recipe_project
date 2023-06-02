@@ -53,6 +53,25 @@ RecipeProject(이하 [RD](https://github.com/wodnrP/Recipe_project))는 요리 �
 - 레시피 제목을 기준으로 검색어가 포함되는 레시피를 모두 검색
 - 검색된 레시피는 최신순으로 정렬되어 제공
 ------------
+## 📋 API 명세
+| API | HTTP Method | End Point | Query String | Description |
+| -- | -- | -- | -- | -- | 
+| SignupAPIView  | POST | /user/signup |   | 회원가입 |
+| LoginAPIView | POST | /user/login |   | 로그인 |
+| LogoutAPIView | POST | /user/logout |   | 로그아웃  | 
+| UserAPIView | GET | /user/<int:id> or /user/ |   | 유저 정보 조회 | 
+| UserAPIView | PATCH | /user/ |   | 유저 정보 수정 | 
+| PopularRecipe | GET | /top |   | 인기TOP10 레시피 조회 | 
+| AllRecipe | POST | / |   | 레시피 작성 | 
+| AllRecipe | GET | / | ?search=title&items=  | 전체 레시피 조회 | 
+| AllRecipe | PATCH | /recipe_id |   | 레시피 수정 | 
+| AllRecipe | DELETE | /recipe_id |   | 레시피 삭제 | 
+| MyRecipe | POST | /storage/recipe_id |   | 레시피 저장 | 
+| MyRecipe | DELETE | /storage/recipe_id |   | 저장 레시피 삭제 |
+| MyRecipe | GET | /storage/ | ?sort=category | 저장 레시피 조회 | 
+| RecommendAPIView | POST | /like/recipe_id |   | 추천 수 증감 기능 | 
+| detailGetAPIView | GET | /detail/recipe_id |   | 조회수 증감, 상세 레시피 조회 | 
+------------
 ## 아키텍쳐
 ### 📂 디렉토리 구조
 > #### Recipe_project
