@@ -8,7 +8,7 @@
 > 개발기간: 2023.02 ~ 2023.05
 
 ## 배포주소
-> 백엔드 : https://rdproject.site
+> 백엔드 : https://rdproject.site (현재 서버 중단)
 > 
 > 프론트 : flutterflow apk file 배포
 
