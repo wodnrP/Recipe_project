@@ -22,6 +22,11 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['id']),
+        ]
 
 # 레시피 image 업로드 경로 함수 
 def image_upload_path(instance, filename):

@@ -20,13 +20,9 @@ from operator import itemgetter
 # 조회수와 추천수 공유수가 높은 레시피 10개의 데이터 조회
 class PopularRecipe(APIView):
     def get(self, request):
-        # Recipe Deserializer - json 데이터화 -> django 딕셔너리 형태로 변형
-        recipe = Recipe.objects.all()
-        serializer = RecipeSerializer(recipe, many=True)
-        json = JSONRenderer().render(serializer.data)
-        stream = io.BytesIO(json)
-        data=JSONParser().parse(stream)
-
+        recipes = Recipe.objects.all()
+        data = RecipeSerializer(recipes, many=True).data
+        
         # popular 계산 및 key로 추가
         for i in range(len(data)):
             popular = (data[i]["hits"]+data[i]["recommend"]*data[i]["share"])
@@ -34,8 +30,7 @@ class PopularRecipe(APIView):
 
         # popular 기준 내림차순 정렬
         sort_data = sorted(data, key=itemgetter('popular'), reverse=True)
-
-        # 정렬된 결과 값 json 재정의
+        #정렬된 결과 값 json 재정의
         response_data=[]
         for i in range(len(sort_data)):
             result = {
