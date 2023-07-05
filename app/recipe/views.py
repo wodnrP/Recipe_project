@@ -22,7 +22,6 @@ class PopularRecipe(APIView):
     def get(self, request):
         recipes = Recipe.objects.all()
         data = RecipeSerializer(recipes, many=True).data
-        
         # popular 계산 및 key로 추가
         for i in range(len(data)):
             popular = (data[i]["hits"]+data[i]["recommend"]*data[i]["share"])
